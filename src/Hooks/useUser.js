@@ -20,7 +20,7 @@ function useUser(userName) {
         catch (e) {
             console.log(e)
             const errorData = {
-                error: e
+                error: 3
             }
             setUser(errorData)
         }
