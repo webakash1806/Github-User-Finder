@@ -1,3 +1,4 @@
+// Loading animation
 
 const CardLoading = ({ notify }) => {
     return (

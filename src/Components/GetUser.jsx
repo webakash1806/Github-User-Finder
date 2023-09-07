@@ -9,27 +9,25 @@ const GetUser = () => {
     const [input, setInput] = useState('')
     const [validate, setValidate] = useState(false)
     const debounce = useDebounce((e) => setInput(e.target.value))
-
-
     const userData = useUser(input)
-    console.log(userData)
+    // console.log(userData)
 
     const dataValidation = () => {
         if (input === '') {
-            // console.log("1")
             setValidate(true)
         }
         else {
-            // console.log(3)
             setValidate(false)
         }
     }
 
+    // Useeffect for validation where input is dependency
     useEffect(() => {
         dataValidation()
     }, [input])
 
-    const { image, name, id, username, profile } = userData.user
+    // destructuring of data
+    const { image, name, id, username, profile, error } = userData.user
 
     return (
         <>
@@ -42,7 +40,7 @@ const GetUser = () => {
                     />
                 </div>
                 {validate ? <CardLoading notify="Search Username!" /> :
-                    (userData.user.error === 404 ? <CardLoading notify="OOPS! No data Found" />
+                    (error === 404 ? <CardLoading notify="OOPS! No data Found" />
                         : (userData.loading === true ? <CardLoading /> :
                             <span className="relative flex shadow-sm shadow-[#955dc3]">
                                 <span className="animate-ping absolute top-8 left-5 inline-flex h-3 w-3 rounded-full bg-[#00fff2] opacity-75"></span>
@@ -55,11 +53,9 @@ const GetUser = () => {
                                         <p className="bg-[#2e2e2e] min-w-[18rem] mb-[0.8rem] rounded-[8px] p-[5px]">UserName: {username}</p>
                                         <Link className="bg-[#6366F1] px-[6rem]  rounded-[6px] p-[5px] font-semibold hover:bg-[#797bf6] duration-200" to={profile}>Visit Profile</Link>
                                     </div>
-
                                 </div>
                             </span>
                         ))}</div>
-
         </>
     )
 }

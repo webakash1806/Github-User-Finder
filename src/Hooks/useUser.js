@@ -1,10 +1,11 @@
+// Custom Hooks for data fetch
+
 import { useEffect, useState } from "react"
 import axios from 'axios'
 
 function useUser(userName) {
     const [user, setUser] = useState({})
     const [loading, setLoading] = useState(false)
-    // let x = 5
     const data = async () => {
         try {
             setLoading(true)
