@@ -14,7 +14,8 @@ function useUser(userName) {
                 name: fetchData.data.name,
                 image: fetchData.data.avatar_url,
                 id: fetchData.data.id,
-                username: fetchData.data.login
+                username: fetchData.data.login,
+                profile: fetchData.data.html_url
             }
             // console.log(userData)
             setUser(userData)
