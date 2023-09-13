@@ -6,25 +6,31 @@ import CardLoading from "./CardLoading"
 
 const GetUser = () => {
 
-    const [input, setInput] = useState('')
-    const [validate, setValidate] = useState(false)
-    const debounce = useDebounce((e) => setInput(e.target.value))
-    const userData = useUser(input)
+    // const [input, setInput] = useState('')
+    // const [validate, setValidate] = useState(false)
+
+    const [getUser, setGetUser] = useState({
+        input: '',
+        validate: false
+    })
+
+    const debounce = useDebounce((e) => setGetUser({ ...getUser, input: e.target.value }))
+    const userData = useUser(getUser.input)
     // console.log(userData)
 
     const dataValidation = () => {
-        if (input === '') {
-            setValidate(true)
+        if (getUser.input === '') {
+            setGetUser({ ...getUser, validate: true })
         }
         else {
-            setValidate(false)
+            setGetUser({ ...getUser, validate: false })
         }
     }
 
     // Useeffect for validation where input is dependency
     useEffect(() => {
         dataValidation()
-    }, [input])
+    }, [getUser.input])
 
     // destructuring of data
     const { image, name, id, username, profile, error } = userData.user
@@ -39,7 +45,7 @@ const GetUser = () => {
                         placeholder="Search Username ..."
                     />
                 </div>
-                {validate ? <CardLoading notify="Search Username!" /> :
+                {getUser.validate ? <CardLoading notify="Search Username!" /> :
                     (error === 404 ? <CardLoading notify="OOPS! No data Found" />
                         : (userData.loading === true ? <CardLoading /> :
                             <span className="relative flex shadow-sm shadow-[#955dc3]">
